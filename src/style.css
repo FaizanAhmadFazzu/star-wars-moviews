@@ -1,0 +1,63 @@
+.header {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: rgb(136, 133, 133);
+    gap: 5px;
+}
+
+.filter{
+    background-color: gray;
+}
+
+.search{
+    flex: 80%;
+}
+
+.dropDownFilter {
+    padding: 20px;
+}
+
+.dropDownFilter > p {
+    font-size: 14px;
+    border-bottom: 1px solid black;
+}
+
+.dropdownOptions {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdownOptions span {
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdownOptions span:hover {
+    background-color: rgb(136, 133, 133);
+}
+
+.movies__container {
+    padding: 10px;
+}
+
+.movie__item {
+    font-size: 12px;
+    border-bottom: 0.5px solid #e9ecef;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.movie__detail {
+    padding: 20px 10px;
+}
+
+.movie_heading {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.movie__detail .desc, .directedBy {
+    font-size: 12px;
+}
