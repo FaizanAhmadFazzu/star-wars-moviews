@@ -12,6 +12,7 @@ import "./style.css"
 function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [dropDownToggle, setDropDownToggle] = useState(false);
   const fetchData = async () => {
     const res = await fetch("https://swapi.dev/api/films/?format=json");
     const data = await res.json();
@@ -44,34 +45,36 @@ function App() {
       })
     }
     setMovies(moviesArr);
+    setDropDownToggle(false);
   }
 
   const searchQuery = (e) => {
-    if(e.target.value === ""){
-      fetchData();
-    } else {
-      let moviesArr = movies.filter(movie => movie.title.includes(e.target.value));
+    if(e.target.value !== ""){
+      let moviesArr = movies.filter(movie => movie.title.toLowerCase().includes(e.target.value.toLowerCase()));
       setMovies(moviesArr);
+    } else {
+      fetchData();
     }
   }
 
   return (
     <div className="App">
       <div className="header">
-        <Dropdown alignright="true" className="filter">
-          <Dropdown.Toggle variant="secondary">
-            Sort By...
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <div className="dropDownFilter">
-              <p>Sort By</p>
-              <div className="dropdownOptions">
-                <span  onClick={() => sortMovies("id")}>Episode</span> 
-                <span onClick={() => sortMovies("year")}>Year</span>
-              </div>
+        <div className="dropdown">
+            <button className="dropbtn" onClick={() => setDropDownToggle(true)}>Sort By...</button>
+            {dropDownToggle && (
+              <div className="dropdown-content">
+                <div className="dropdownHeader">
+                  <span>Sort by</span>
+                  <i className="fa fa-times closeIcon" onClick={() => setDropDownToggle(false)} />
+                </div>
+                <div className="dropdownOptions">
+                  <div  onClick={() => sortMovies("id")}>Episode</div> 
+                  <div onClick={() => sortMovies("year")}>Year</div>
+                </div>
             </div>
-          </Dropdown.Menu>
-        </Dropdown>
+            )}
+        </div>
         <Navbar.Text className="search">
           <FormControl
             type="search"
@@ -102,7 +105,15 @@ function App() {
                   <p className="desc">{selectedMovie.opening_crawl}</p>
                   <p className="directedBy">{`Directed By: ${selectedMovie.director}`}</p>
                   
-                </div>  : <div>No Movie Selected</div>
+                </div>  : <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  height: "100%"
+                }}>
+                  No Movie Selected
+                  </div>
               }
           </Col>
         </Row>
